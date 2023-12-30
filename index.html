@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Monster Slayer Game</h1>
+    </header>
+    <div id="game">
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" v-bind:style="monsterBarStyles"></div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" v-bind:style="playerBarStyles"></div>
+        </div>
+      </section>
+      <section class="container" v-if="winner">
+        <h2>Game Over!</h2>
+        <h3 v-if="winner === 'monster'">You Lost </h3>
+        <h3 v-else-if="winner === 'player'">You Won!</h3>
+        <h3 v-else-if="winner === 'draw'">It's Draw!</h3>
+        <button v-on:click="startGame()">Start New Game!</button>
+      </section>
+      <section id="controller" v-else>
+        <button v-on:click="attackMonster()">ATTACK</button>
+        <button v-bind:disabled="mayUseSpecialAttack" v-on:click="specialAttackMonster()">SUPER ATTACK</button>
+        <button v-on:click="healPlayer()">HEAL</button>
+        <button v-on:click="surrender">SURRENDER</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <ul>
+          <li v-for="logMsg in logMessages">
+            
+            🔥{{logMsg.actionBy}} -- {{logMsg.actionType }} -- {{logMsg.actionValue}} 🔥
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
